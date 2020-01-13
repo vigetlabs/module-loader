@@ -1,9 +1,10 @@
-import { initialize, registerModules } from '../index'
-import { makeTestableModule, appendDiv } from 'test-helpers'
+import { initialize, registerModules, clearModules } from '../index'
+import { resetDocument, makeTestableModule, appendDiv } from 'test-helpers'
 
 describe('initialize', () => {
   beforeEach(() => {
-    document.body.innerHTML = ''
+    resetDocument()
+    clearModules()
   })
 
   it('calls the module constructor when intializing modules on a page', async () => {
@@ -129,7 +130,7 @@ describe('initialize', () => {
       test: makeTestableModule(stub)
     })
 
-    let target = appendDiv({
+    appendDiv({
       'data-module': 'test'
     })
 
@@ -140,22 +141,13 @@ describe('initialize', () => {
     )
   })
 
-  it('warns against multiple instantiation', async () => {
-    let stub = jest.fn()
-
-    registerModules({
-      test: makeTestableModule(stub)
-    })
-
+  it('throws an error when a module definition is not found', async () => {
     appendDiv({
       'data-module': 'test'
     })
 
-    await initialize()
-
-    // second call to initialize throws
     await expect(initialize()).rejects.toThrow(
-      /Multiple instantiation detected/
+      /Module not found: Cannot construct module \"test\"/
     )
   })
 })

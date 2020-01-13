@@ -7,6 +7,10 @@ export function getModules() {
   return moduleConfiguration.moduleMap
 }
 
+export function clearModules() {
+  moduleConfiguration.moduleMap = {}
+}
+
 export function registerModules(modules) {
   moduleConfiguration.moduleMap = Object.assign(
     {},

@@ -64,9 +64,10 @@ function initializeModule(
     })
     .catch(() => {
       let message =
-        `Cannot construct module "${moduleName}", it has not been registered. ` +
-        `Check that the attribute "${moduleAttribute}" exists and that its value ` +
-        `matches a registered name in the ModuleBootstrapper module map.`
+        `Module not found: Cannot construct module "${moduleName}", it has not ` +
+        `been registered. Check that the attribute "${moduleAttribute}" exists ` +
+        `and that its value matches a registered name in the ModuleBootstrapper ` +
+        `module map.`
 
       if (warnOnModuleNotFound) {
         console.log(message)

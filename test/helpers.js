@@ -5,6 +5,9 @@ export function makeTestableModule(callback) {
     }
   }
 }
+export function resetDocument() {
+  document.body.innerHTML = ''
+}
 
 export function appendDiv(attributes, container = document) {
   let element = document.createElement('div')
