@@ -8,7 +8,11 @@ export function getModules() {
 }
 
 export function registerModules(modules) {
-  moduleConfiguration.moduleMap = Object.assign({}, moduleMap, modules)
+  moduleConfiguration.moduleMap = Object.assign(
+    {},
+    moduleConfiguration.moduleMap,
+    modules
+  )
 }
 
 export function configureModules(config) {
@@ -20,5 +24,10 @@ export function loadModule(moduleName) {
     return Promise.resolve(moduleConfiguration.moduleMap[moduleName])
   }
 
-  return import(`./${moduleConfiguration.directory}/${moduleName}`)
+  return import(`./${moduleConfiguration.directory}/${moduleName}`).then(
+    Module => {
+      moduleMap[moduleName] = Module
+      return Module
+    }
+  )
 }
